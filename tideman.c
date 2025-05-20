@@ -88,22 +88,20 @@ int main(int argc, string argv[])
         //     printf("%i\n", ranks[j]);
         // }
         //we want some code that returns false in case that someone writes the same person twice.
-        for (int i = 0; i < candidate_count; i++)
-        {
-            for (int j = i +1; j < candidate_count; j++)
-            {
-                if (ranks[i] == ranks[j])
-                {
-                    printf("A vote cannot contain a single candidate in two diffrent ranks\n");
-                    return 4;
-                }
-            }
-        }
 
         record_preferences(ranks);
 
         printf("\n");
     }
+
+    // for (int i = 0; i < MAX; i++)
+    // {
+    //     for (int j = 0; j < MAX; j++)
+    //     {
+    //         printf("%d ", preferences[i][j]);
+    //     }
+    //     printf("\n");
+    // }
 
     add_pairs();
     sort_pairs();
@@ -129,7 +127,13 @@ bool vote(int rank, string name, int ranks[])
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            preferences[ranks[i]][ranks[j]]++;
+        }
+    }
     return;
 }
 

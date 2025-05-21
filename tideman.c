@@ -114,6 +114,14 @@ int main(int argc, string argv[])
     //     printf("Winner: %d\nLoser: %d\n", pairs[i].winner, pairs[i].loser);
     // }
     lock_pairs();
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            printf("%d", locked[i][j]);
+        }
+        printf("\n");
+    }
     print_winner();
     return 0;
 }
@@ -203,7 +211,48 @@ void sort_pairs(void)
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
+    // first we create all the edge cases
+    // & we claculate how many edge cases each candidate has
+    
+    int candidates_edge_count[candidate_count];
+    for (int i = 0; i < candidate_count; i++)
+    {
+        candidates_edge_count[i] = 0;
+    }
+    // for (int i = 0; i < candidate_count; i++)
+    // {
+    //     printf("%i\n", candidates_edge_count[i]);
+    // }
+
+    for (int i = 0; i < pair_count; i++)
+    {
+        locked[pairs[i].winner][pairs[i].loser] = true;
+        candidates_edge_count[pairs[i].winner]++;
+    }
+    // for (int i = 0; i < candidate_count; i++)
+    // {
+    //     printf("candidate edge count: %d ", candidates_edge_count[i]);
+    //     printf("\n");
+    // }
+    // making sure all candidates do not have the same number of edge count
+    // if they do then a cycle has been created
+
+    bool cycleCreated = true;
+    int first_candidate_edge_count = candidates_edge_count[0];
+    for (int i = 1; i < candidate_count; i++)
+    {
+        if (first_candidate_edge_count != candidates_edge_count[i])
+        {
+            cycleCreated = false;
+            break;
+        }
+    }
+    // printf("cycleCreated: %d\n", cycleCreated);
+
+    if (cycleCreated)
+    {
+        locked[pairs[pair_count - 1].winner][pairs[pair_count - 1].loser] = false;
+    }
     return;
 }
 

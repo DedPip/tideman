@@ -214,10 +214,10 @@ void lock_pairs(void)
     // first we create all the edge cases
     // & we claculate how many edge cases each candidate has
     
-    int candidates_edge_count[candidate_count];
+    int candidate_edge_count[candidate_count];
     for (int i = 0; i < candidate_count; i++)
     {
-        candidates_edge_count[i] = 0;
+        candidate_edge_count[i] = 0;
     }
     // for (int i = 0; i < candidate_count; i++)
     // {
@@ -227,28 +227,28 @@ void lock_pairs(void)
     for (int i = 0; i < pair_count; i++)
     {
         locked[pairs[i].winner][pairs[i].loser] = true;
-        candidates_edge_count[pairs[i].winner]++;
+        candidate_edge_count[pairs[i].winner]++;
     }
     // for (int i = 0; i < candidate_count; i++)
     // {
     //     printf("candidate edge count: %d ", candidates_edge_count[i]);
     //     printf("\n");
     // }
+
     // making sure all candidates do not have the same number of edge count
     // if they do then a cycle has been created
-
     bool cycleCreated = true;
-    int first_candidate_edge_count = candidates_edge_count[0];
+    int first_candidate_edge_count = candidate_edge_count[0];
     for (int i = 1; i < candidate_count; i++)
     {
-        if (first_candidate_edge_count != candidates_edge_count[i])
+        if (first_candidate_edge_count != candidate_edge_count[i])
         {
             cycleCreated = false;
             break;
         }
     }
-    // printf("cycleCreated: %d\n", cycleCreated);
 
+    // printf("cycleCreated: %d\n", cycleCreated);
     if (cycleCreated)
     {
         locked[pairs[pair_count - 1].winner][pairs[pair_count - 1].loser] = false;
@@ -259,6 +259,34 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
-    // TODO
+    // create an array which will hold the hold the edge score for each candidate
+    int candidate_edge_score[candidate_count];
+    for (int i = 0; i < candidate_count; i++)
+    {
+        candidate_edge_score[i] = 0;
+    }
+    
+    //count the edges for each candidate
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[i][j])
+            {
+                candidate_edge_score[i]++;
+                candidate_edge_score[j]--;
+            }
+        }
+    }
+
+    int winner_index = 0;
+    for (int i = 1; i < candidate_count; i++)
+    {
+        if (candidate_edge_score[winner_index] < candidate_edge_score[i])
+        {
+            winner_index = i;
+        }
+    }
+    printf("%s\n", candidates[winner_index]);
     return;
 }

@@ -109,6 +109,10 @@ int main(int argc, string argv[])
     //     printf("Winner: %d\nLoser: %d\n", pairs[i].winner, pairs[i].loser);
     // }
     sort_pairs();
+    // for (int i = 0; i < pair_count; i++)
+    // {
+    //     printf("Winner: %d\nLoser: %d\n", pairs[i].winner, pairs[i].loser);
+    // }
     lock_pairs();
     print_winner();
     return 0;
@@ -172,7 +176,27 @@ void add_pairs(void)
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
+    for (int i = 0; i < pair_count; i++)
+    {
+        int first_pair_of_pairs_score = preferences[pairs[i].winner][pairs[i].loser];
+        int index_of_biggest_score = i;
+
+        for (int j = i + 1; j < pair_count; j++)
+        {
+            if (first_pair_of_pairs_score < preferences[pairs[j].winner][pairs[j].loser])
+            {
+                index_of_biggest_score = j;
+            }
+        }
+        if (index_of_biggest_score > i)
+        {
+            pair biggest_score_holder = pairs[index_of_biggest_score];
+            //replace the biggest score with the first score
+            pairs[index_of_biggest_score] = pairs[i];
+            //replace the first score with the biggest score
+            pairs[i] = biggest_score_holder;
+        }
+    }
     return;
 }
 

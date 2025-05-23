@@ -115,14 +115,14 @@ int main(int argc, string argv[])
     //     printf("Winner: %d\nLoser: %d\n", pairs[i].winner, pairs[i].loser);
     // }
     lock_pairs();
-    for (int i = 0; i < candidate_count; i++)
-    {
-        for (int j = 0; j < candidate_count; j++)
-        {
-            printf("%d", locked[i][j]);
-        }
-        printf("\n");
-    }
+    // for (int i = 0; i < candidate_count; i++)
+    // {
+    //     for (int j = 0; j < candidate_count; j++)
+    //     {
+    //         printf("%d", locked[i][j]);
+    //     }
+    //     printf("\n");
+    // }
     print_winner();
     return 0;
 }
@@ -249,34 +249,21 @@ void lock_pairs(void)
 // Print the winner of the election
 void print_winner(void)
 {
-    // create an array which will hold the hold the edge score for each candidate
-    int candidate_edge_score[candidate_count];
     for (int i = 0; i < candidate_count; i++)
     {
-        candidate_edge_score[i] = 0;
-    }
-    
-    //count the edges for each candidate
-    for (int i = 0; i < candidate_count; i++)
-    {
+        bool has_incoming_edge = false;
         for (int j = 0; j < candidate_count; j++)
         {
-            if (locked[i][j])
+            if (locked[j][i])
             {
-                candidate_edge_score[i]++;
-                candidate_edge_score[j]--;
+                has_incoming_edge = true;
+                break;
             }
         }
-    }
-
-    int winner_index = 0;
-    for (int i = 1; i < candidate_count; i++)
-    {
-        if (candidate_edge_score[winner_index] < candidate_edge_score[i])
+        if (!has_incoming_edge)
         {
-            winner_index = i;
+            printf("%s\n", candidates[i]);
+            return;
         }
     }
-    printf("%s\n", candidates[winner_index]);
-    return;
 }

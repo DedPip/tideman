@@ -84,45 +84,15 @@ int main(int argc, string argv[])
                 return 3;
             }
         }
-        // for (int j = 0; j < candidate_count; j++)
-        // {
-        //     printf("%i\n", ranks[j]);
-        // }
-        //we want some code that returns false in case that someone writes the same person twice.
 
         record_preferences(ranks);
 
         printf("\n");
     }
 
-    // for (int i = 0; i < MAX; i++)
-    // {
-    //     for (int j = 0; j < MAX; j++)
-    //     {
-    //         printf("%d ", preferences[i][j]);
-    //     }
-    //     printf("\n");
-    // }
-
     add_pairs();
-    // for (int i = 0; i < pair_count; i++)
-    // {
-    //     printf("Winner: %d\nLoser: %d\n", pairs[i].winner, pairs[i].loser);
-    // }
     sort_pairs();
-    // for (int i = 0; i < pair_count; i++)
-    // {
-    //     printf("Winner: %d\nLoser: %d\n", pairs[i].winner, pairs[i].loser);
-    // }
     lock_pairs();
-    // for (int i = 0; i < candidate_count; i++)
-    // {
-    //     for (int j = 0; j < candidate_count; j++)
-    //     {
-    //         printf("%d", locked[i][j]);
-    //     }
-    //     printf("\n");
-    // }
     print_winner();
     return 0;
 }

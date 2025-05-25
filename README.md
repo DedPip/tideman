@@ -1,5 +1,6 @@
 # Tideman Voting System (Ranked Pairs)
 
+My solution to CS50x problem set three, part three.
 This program implements the **Tideman voting system**, also known as the **Ranked Pairs** method, in C. It allows voters to rank candidates in order of preference and determines the winner using a directed graph approach, while ensuring no cycles are formed.
 
 ---
